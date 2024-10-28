@@ -1,4 +1,4 @@
-import numpy as numpy
+import numpy as np
 from scipy.stats import norm
 
 def black_scholes(s, k, t, r, sigma, option_type = 'call'):
