@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 import streamlit as st
-from calculation import black_scholes
+from bs_calculation import black_scholes
 
 def generate_heatmap(S, K, T, r, sigma_range, S_range, option_type='call'):
     sigma_values = np.linspace(*sigma_range, 10)
