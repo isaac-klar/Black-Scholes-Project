@@ -1,9 +1,10 @@
 import streamlit as st
 import yfinance as yf
+import numpy as np
 from bs_calculation import black_scholes
 from binomial import binomial_tree_fast
 from visualizations import generate_heatmap
-import numpy as np
+
 
 # Sidebar for navigation
 st.sidebar.title("Navigation")
