@@ -5,8 +5,8 @@ import streamlit as st
 from calculation import black_scholes
 
 def generate_heatmap(S, K, T, r, sigma_range, S_range, option_type='call'):
-    sigma_values = np.linspace(*sigma_range, 20)
-    S_values = np.linspace(*S_range, 20)
+    sigma_values = np.linspace(*sigma_range, 10)
+    S_values = np.linspace(*S_range, 10)
     
     price_matrix = np.zeros((len(S_values), len(sigma_values)))
     
@@ -21,6 +21,6 @@ def generate_heatmap(S, K, T, r, sigma_range, S_range, option_type='call'):
     plt.ylabel('Stock Price (S)')
     plt.title(f'{option_type.capitalize()} Option Price Heatmap', fontsize=16, fontweight='bold')
     
-    # Display in Streamlit
+
     st.pyplot(plt.gcf())
     plt.close()
