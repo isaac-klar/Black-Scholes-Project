@@ -1,9 +1,10 @@
 import numpy as np
 
-
-def binomial_tree_fast(K, T, S0, r, N, u, d, option_type='call'):
+def binomial_tree_fast(K, T, S0, r, N, sigma, option_type='call'):
     #precompute constants
     dt = T/N
+    u = np.exp(sigma * np.sqrt(dt))
+    d = np.exp( -sigma * np.sqrt(dt) )
     q = (np.exp(r*dt) - d) / (u-d)
     disc = np.exp(-r*dt)
 

@@ -13,10 +13,10 @@ page = st.sidebar.selectbox("Select a page:", ["Black-Scholes Option Pricer", "B
 if page == "Black-Scholes Option Pricer":
     st.title('Black-Scholes Option Pricer')
 
-    # Set S to None initially to handle cases where no valid ticker is provided
+    # Set S to None initially
     S = None
 
-    # Checkbox to choose stock symbol or manually enter asset price
+    # Checkbox to choose stock symbol
     use_stock = st.checkbox('Use a stock ticker')
     if use_stock:
         stock_ticker = st.text_input("Enter Stock Ticker (e.g., AAPL for Apple)")
@@ -79,10 +79,8 @@ elif page == "Binomial Option Pricing":
     r = st.number_input('Risk-Free Interest Rate (USD)', value=0.05)
     sigma = st.number_input('Volatility', value=0.2)
     n = st.number_input('Number of Steps (n)', value=100, min_value=1)  # Number of steps for the binomial tree
-    u = st.number_input('Up Factor (u)', value=np.exp(sigma * np.sqrt(T/n)), step=0.01)  # Example: volatility-based up factor
-    d = st.number_input('Down Factor (d)', value=1/u, step=0.01)  # Example: 1/u as down factor
     option_type = st.selectbox('Option Type', ('call', 'put'))
 
     if st.button('Calculate Binomial Price'):
-        binomial_price = binomial_tree_fast(K, T, S, r, n, u, d, option_type)
+        binomial_price = binomial_tree_fast(K, T, S, r, n, sigma, option_type)
         st.write(f'The {option_type} option price using the binomial model is: ${binomial_price:.2f}')
