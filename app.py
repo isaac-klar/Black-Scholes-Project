@@ -24,7 +24,7 @@ if page == "Black-Scholes Option Pricer":
         if stock_ticker:
             try:
                 stock_data = yf.Ticker(stock_ticker)
-                S = stock_data.history(period="3d")["Close"][-1]  # Fetch the latest price
+                S = stock_data.info.get('currentPrice')  # Fetch the latest price
                 st.write(f"Current price of {stock_ticker.upper()}: ${S:.2f}")
             except Exception as e:
                 st.write(f"Failed to retrieve data for {stock_ticker.upper()}. Please check the ticker symbol.")
@@ -63,7 +63,7 @@ elif page == "Binomial Option Pricing":
         if stock_ticker:
             try:
                 stock_data = yf.Ticker(stock_ticker)
-                S = stock_data.history(period="1d")["Close"][-1]  # Fetch the latest price
+                S = stock_data.info.get('currentPrice')  # Fetch the latest price
                 st.write(f"Current price of {stock_ticker.upper()}: ${S:.2f}")
             except Exception as e:
                 st.write(f"Failed to retrieve data for {stock_ticker.upper()}. Please check the ticker symbol.")
