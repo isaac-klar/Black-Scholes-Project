@@ -1,6 +1,5 @@
 import streamlit as st
 import yfinance as yf
-import numpy as np
 from bs_calculation import black_scholes
 from binomial import binomial_tree_fast
 from visualizations import generate_heatmap
@@ -19,6 +18,7 @@ if page == "Black-Scholes Option Pricer":
     # Checkbox to choose stock symbol
     use_stock = st.checkbox('Use a stock ticker')
     if use_stock:
+        S = 0
         stock_ticker = st.text_input("Enter Stock Ticker (e.g., AAPL for Apple)")
         
         if stock_ticker:
@@ -41,15 +41,15 @@ if page == "Black-Scholes Option Pricer":
     sigma = st.number_input('Volatility', value=0.2)
     option_type = st.selectbox('Option Type', ('call', 'put'))
 
-    if st.button('Calculate'):
+    if st.button('Calculate and Generate Heatmap'):
         price = black_scholes(S, K, T, r, sigma, option_type)
         st.write(f'The {option_type} option price is: ${price:.2f}')
-
-    st.write('### Option Price Heatmap')
-    sigma_range = (0.1, 0.5)
-    S_range = (S / 2, S * 1.5)
-    if st.button('Generate Heatmap'):
+        st.write('### Option Price Heatmap')
+        sigma_range = (0.1, 0.5)
+        S_range = (S / 2, S * 1.5)
         generate_heatmap(S, K, T, r, sigma_range, S_range, option_type)
+
+
 
 elif page == "Binomial Option Pricing":
     st.title('Binomial Option Pricing')
@@ -58,6 +58,7 @@ elif page == "Binomial Option Pricing":
     # Checkbox to choose stock symbol or manually enter asset price
     use_stock = st.checkbox('Use a stock ticker')
     if use_stock:
+        S = 0
         stock_ticker = st.text_input("Enter Stock Ticker (e.g., AAPL for Apple)")
         
         if stock_ticker:
@@ -81,6 +82,10 @@ elif page == "Binomial Option Pricing":
     n = st.number_input('Number of Steps (n)', value=100, min_value=1)  # Number of steps for the binomial tree
     option_type = st.selectbox('Option Type', ('call', 'put'))
 
-    if st.button('Calculate Binomial Price'):
+    if st.button('Calculate Binomial Price and Generate Heatmap'):
         binomial_price = binomial_tree_fast(K, T, S, r, n, sigma, option_type)
         st.write(f'The {option_type} option price using the binomial model is: ${binomial_price:.2f}')
+        st.write('### Option Price Heatmap')
+        sigma_range = (0.1, 0.5)
+        S_range = (S / 2, S * 1.5)
+        generate_heatmap(S, K, T, r, sigma_range, S_range, option_type)
